@@ -1,4 +1,7 @@
 import rutinas.*
+import club.*
+import gimnasia.*
+
 class Persona {
      var peso
     
@@ -21,33 +24,36 @@ class Persona {
     }
 }
 class PersonaSedentaria inherits Persona{
-     var tiempoDeRutina 
+     var property tiempoDeRutina 
     
     override method kilosPorCaloria(){
          return 7000
     }
-    override method puedeEjecutar(rutina,tiempo){
+    override method puedeEjecutar(rutina, tiempo ){
          return peso > 50
     }
-    override method tiempo(){
-        return tiempoDeRutina
-    }
+    override method tiempo() {
+         return tiempoDeRutina
+     }
+    method caloriasQueGastaria(rutina) {
+         return rutina.caloriasQuemadas(self.tiempo())
+     }
 }
 class PersonaAtleta inherits Persona{
      const tiempoDeRutina = 90
 
     override method pesoQuePierdeCon(rutina, tiempo){
-        return super(rutina,tiempo) -1 
+         return super(rutina,tiempo) -1 
     }
     
     override method kilosPorCaloria(){
          return 8000
     }
-    override method puedeEjecutar(rutina,tiempo){
-         return peso > 50
-    }
-    override method tiempo(){
-        return tiempoDeRutina
+    override method puedeEjecutar(rutina, tiempo){
+         return rutina.caloriasQuemadas(tiempoDeRutina ) > 10000
+     }
+     override method tiempo() {
+       return tiempoDeRutina
     }
 }
 

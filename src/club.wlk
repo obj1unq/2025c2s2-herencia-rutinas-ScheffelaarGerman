@@ -1,32 +1,30 @@
-import rutinas.*
-import personas.*
-import gimnasia.*
+class Club{
+    const property predios
 
-class Club {
-    var property predios = #{}
+    method mejorPredio(persona){
+         return predios.max({predio => predio.calorias(persona) })
 
-     method mejorPredioDelClubPara(persona){
-         return predios.max({ predio => predio.caloriasTotalesPara(persona)})
-     }
-    method prediosTranquisDelClubPara(persona) {
-         return predios.filter({ predio => predio.tieneRutinaTranquiPara(persona) })
-     }
-    method rutinasMasExigentesPara(persona){
-        return predios.map({ predio => predio.rutinaMasExigentePara(persona)})
+    }
+    method prediosTranqui(persona){
+         return predios.filter({predio => predio.esTranqui(persona)})
+
+    }
+    method rutinasMasExigentes(persona){
+        return predios.map({ predio => predio.rutinaMasExigente(persona)}).asSet()
+
     }
 }
 class Predio {
-    var property rutinas = #{}
+    const property rutinas
 
-    method caloriasTotalesPara(persona){
-        return rutinas.sum({rutina => persona.caloriasQueGastaria(rutina)})
+    method calorias(persona){
+         return rutinas.sum({rutina => persona.calorias(rutina)})
+    }
+    method esTranqui(persona){
+        return rutinas.any({rutina => persona.calorias(rutina) < 500})
+    }
+    method rutinaMasExigente(persona){
+        return rutinas.max({rutina => persona.calorias(rutina)})
+    }
 
-    }
-    method tieneRutinaTranquiPara(persona){
-        return rutinas.any({rutina => persona.caloriasQueGastaria(rutina)<500})
-
-    }
-    method rutinaMasExigentePara(persona){
-        return rutinas.max({ rutina=> persona.caloriasQueGastaria(rutina)})
-    }
 }
